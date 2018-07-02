@@ -1,16 +1,20 @@
 
 <h1>Quora Clone / User Page</h1>
-<h3><%= "Welcome #{@user.first_name}!" %></h3>
-<p><%= "Your personal details:" %></p>
+<% if current_user && current_user.id == @user.id %>
 
-<p><%= "Full Name: #{@user.first_name} #{@user.last_name}" %></p>
-<p><%= "Username: #{@user.username}" %></p>
-<p><%= "Email: #{@user.email}" %></p>
+	<h3><%= "Welcome #{@user.first_name}!" %></h3>
+	<p><%= "Your personal details:" %></p>
+    <p><%= "Full Name: #{@user.first_name} #{@user.last_name}" %></p>
+	<p><%= "Username: #{@user.username}" %></p>
+	<p><%= "Email: #{@user.email}" %></p>
+	
+	<br />
 
-</n>
-<h3>Your Questions:</h3>
+	<h3>Your Questions:</h3>
+    <% @questions.all.each do |question| %>
+       <li><%= question.user_question %></li>
+    <% end %>
 
- <% @questions.all.each do |question| %>
-   <li><%= question.user_question %></li>
- <% end %>
-
+<% else %>   
+      <p>You are not authorized to view this content</p>
+<% end %>

@@ -37,7 +37,7 @@ set :erb, layout: :'application'
 require APP_ROOT.join('config', 'database')
 
 # Setup controllers
-# Dir[APP_ROOT.join('controllers', '*.rb')].each { |file| require file }
+Dir[APP_ROOT.join('controllers', '*.rb')].each { |file| require file }
 # Setup helper
 Dir[APP_ROOT.join('helpers', '*.rb')].each { |file| require file }
 
