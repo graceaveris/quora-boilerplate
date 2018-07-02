@@ -1,0 +1,12 @@
+<h2>Log in to your account</h2>
+<form method="POST" action="/login">
+    <input type=text placeholder="Email" name="email"><br>
+    <input type=password placeholder="Password" name="password"></br>
+    <input type=submit value="Login">
+</form>
+
+<% flash.keys.each do |type| %>
+  <div data-alert class="flash <%= type %> alert-box radius">
+    <%= flash[type] %>
+  </div>
+<% end %>

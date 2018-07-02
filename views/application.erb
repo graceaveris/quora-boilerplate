@@ -9,10 +9,18 @@
     <link rel="stylesheet" type="text/css" href="css/application.css">
   </head>
   <body>
-
+   
+    <% if current_user %>
+      <%= current_user.email %>
+      <a href="/">Home</a>
+      <a href="/users/<%= current_user.username %>">My Profile</a>
+      <a href="/log_out"><button>Log Out</button></a>
+    <% else %>
+      <a href="/signup">Sign Up</a>
+      <a href="/login">Log In</a>
+    <% end %>
+    
     <%= yield %>
 
   </body>
 </html>
-
-

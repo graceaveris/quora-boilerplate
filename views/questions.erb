@@ -1,0 +1,35 @@
+
+
+<body>
+<h1>Quora Clone / Questions</h1>
+<h3>Welcome to Grace's quoraclone!</h3>
+
+<p>This is the QUESTION PAGE! Here you can view all questions, whether or not you are logged in</p>
+
+
+ <% @questions.all.each do |question| %>
+   <a href="/questions/<%= question.id %>"><li><%= question.user_question %></li></a>
+ <% end %>
+
+ <% if current_user %>
+ <h3>Ask the internet a question:</h3>
+
+		<form action="/questions" method="POST">
+		    <input name="newquestion" placeholder="Type Question">
+		    <input type="submit" value="Ask">
+		</form>
+  <% else %>
+
+      <h3><a href="/login">Login</a> or <a href="/signup">Signup</a> to ask a question</h3>
+ 
+  <% end %>
+  
+  <% flash.keys.each do |type| %>
+  <div data-alert class="flash <%= type %> alert-box radius">
+    <%= flash[type] %>
+  </div>
+
+<% end %>
+
+</body>
+

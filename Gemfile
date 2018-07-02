@@ -16,6 +16,9 @@ gem 'rake'
 
 gem 'thin'
 
+gem 'sinatra-flash'
+
+
 # group :development do
   # gem "shotgun"
 # end
