@@ -3,13 +3,13 @@ require_relative './config/init.rb'
 set :run, true
 
 get '/' do
-  erb :"home"
+  erb :"user/home"
 end
 
 
 #a get will return something to the user
 get '/signup' do
-	erb :"signup"
+	erb :"user/signup"
 end
 
 
@@ -18,53 +18,53 @@ post '/signup' do
   x = User.new(first_name: params[:first_name], last_name: params[:last_name], email: params[:email], username: params[:username], password: params[:password])
   if x.save
   	session[:id] = x.id
-  	redirect "/users/#{current_user.username}"
+  	redirect "/user/users/#{current_user.username}"
   else
     flash[:error] = "Must be a valid email address"
-  	redirect '/signup'
+  	redirect '/user/signup'
   end
 end
 
-
+#LOGIN PAGE
 get '/login' do
-    erb :"login"
+    erb :"user/login"
 end
 
-
+#AUTHENTICATE LOGIN
 post '/login' do 
 	@x = User.find_by(email: params[:email])
   # byebug
 
 	if @x && @x.authenticate(params[:password])
       session[:id] = @x.id
-      redirect "/users/#{current_user.username}"
+      redirect "/user/users/#{current_user.username}"
    
   elsif @x
     	flash[:error] = "incorrect password"
-    	redirect'/login'
+    	redirect'/user/login'
   
   else flash[:error] = "email does not exist"
-    	redirect'/login'
+    	redirect'/user/login'
   end
 end
 
 #LOGOUT clears the session
 get '/log_out' do
 	session.clear
-	redirect '/'
+	redirect 'user/'
 end
 
 #PROFILE PAGE AND URL GENERATOE
 get '/users/:username' do
   @user = User.find_by(username: params[:username])
   @questions = @user.questions
-  erb :'/user_home'
+  erb :'user/user_home'
 end
 
 #QUESTIONS PAGE = LISTS ALL QUESTIONS
 get '/questions' do
 @questions = Question.all
-  erb :'/questions'
+  erb :'questions/questions'
 end
 
 #ADD QUESTION TO DATABASE / a post will add our question back to the database
@@ -78,8 +78,8 @@ end
 #INDIVIDUAL QUESTION PAGE / THIS SHOWS THE QUESTION SELECTED, AND DISPLAYS CURRENT ANSWERS.
 get '/questions/:id' do
   @question = Question.find(params[:id])
-  @answers = @question.answers
-  erb :'questions:show'
+  @answers = @question.answers#here i need to order it somehow
+  erb :'questions/questions:show'
 end
 
 #ADD AN ANSWER / ADD A TO DATABSE AND DISPLAY

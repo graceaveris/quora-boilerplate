@@ -18,6 +18,7 @@ gem 'thin'
 
 gem 'sinatra-flash'
 
+gem 'shotgun'
 
 # group :development do
   # gem "shotgun"
