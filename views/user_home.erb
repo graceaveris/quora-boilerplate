@@ -1,0 +1,16 @@
+
+<h1>Quora Clone / User Page</h1>
+<h3><%= "Welcome #{@user.first_name}!" %></h3>
+<p><%= "Your personal details:" %></p>
+
+<p><%= "Full Name: #{@user.first_name} #{@user.last_name}" %></p>
+<p><%= "Username: #{@user.username}" %></p>
+<p><%= "Email: #{@user.email}" %></p>
+
+</n>
+<h3>Your Questions:</h3>
+
+ <% @questions.all.each do |question| %>
+   <li><%= question.user_question %></li>
+ <% end %>
+

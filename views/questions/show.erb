@@ -1,0 +1,40 @@
+
+
+<body>
+<h1>Quora Clone / Question Page</h1>
+
+<h3><%= "Question: #{@question.user_question}" %></h3>
+<p><i><%= "Posted by: #{@question.user.username} on #{@question.created_at.strftime("%b %d, %Y")}" %></i></p>
+
+<h1>Current Answers:</h1>
+
+ <% @answers.all.each do |x| %>
+  <li><%= "#{x.user_answer} || Votes: #{x.votes.count}" %></li>
+    <form action="/vote" method="POST">
+		    <input name="answerid" type="hidden" value="<%= x.id %>">
+		    <input name="questionid" type="hidden" value="<%= @question.id %>">
+		    <input type="submit" value="UpVote!">
+    </form>
+ <% end %>
+
+<!-- FORM TO SUBMIT ANSWER -->
+ <h3>Submit an answer:</h3>
+
+		<form action="/answers" method="POST">
+		    <input name="newanswer" placeholder="Type Answer">
+		    <input name="questionid" type="hidden" value="<%= @question.id %>">
+		    <input type="submit" value="Answer">
+		</form>
+  <% else %>
+
+
+<!-- FORM TO UPDATE QUESTION / NOT WORKING -->
+ <h3>Update the question:</h3>
+	<form action="/update" method="post">
+		    <input id="hidden" type="hidden" name="_method" value="patch">
+		    <input name="questionid" type="hidden" value="<%= @question.id %>">
+		    <input name="updatedquestion" type="text" >
+		    <input type="submit" value="Submit Edit">
+	</form>
+
+</body>

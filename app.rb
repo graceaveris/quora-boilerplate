@@ -37,14 +37,14 @@ post '/login' do
 
 	if @x && @x.authenticate(params[:password])
       session[:id] = @x.id
-      redirect "/user/users/#{current_user.username}"
+      redirect "/users/#{current_user.username}"
    
   elsif @x
     	flash[:error] = "incorrect password"
-    	redirect'/user/login'
+    	redirect'/login'
   
   else flash[:error] = "email does not exist"
-    	redirect'/user/login'
+    	redirect'/login'
   end
 end
 
@@ -78,8 +78,9 @@ end
 #INDIVIDUAL QUESTION PAGE / THIS SHOWS THE QUESTION SELECTED, AND DISPLAYS CURRENT ANSWERS.
 get '/questions/:id' do
   @question = Question.find(params[:id])
-  @answers = @question.answers#here i need to order it somehow
-  erb :'questions/questions:show'
+   # @answers = @question.answers #ORIGINAL LINE, WITHOUT THE VOTE ORDER
+  @answers = Answer.where(question_id: @question.id).left_joins(:votes).group(:id).order('COUNT(votes.id) DESC').limit(10)
+  erb :'questions/show'
 end
 
 #ADD AN ANSWER / ADD A TO DATABSE AND DISPLAY
@@ -103,5 +104,4 @@ post '/vote' do
   redirect "/questions/#{params[:questionid]}"
 
 end
-
 
